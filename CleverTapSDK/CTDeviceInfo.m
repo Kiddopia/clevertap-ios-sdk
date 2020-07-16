@@ -144,35 +144,7 @@ static void CleverTapReachabilityHandler(SCNetworkReachabilityRef target, SCNetw
 }
 
 + (NSString *)getIDFA {
-    
-    NSString *identifier;
-    
-    @try {
-        Class asim = NSClassFromString(@"ASIdentifierManager");
-        if (!asim) {
-            return nil;
-        }
-        SEL smSelector = NSSelectorFromString(@"sharedManager");
-        id sm = ((id (*)(id, SEL)) [asim methodForSelector:smSelector])(asim, smSelector);
-        
-        SEL ateSelector = NSSelectorFromString(@"isAdvertisingTrackingEnabled");
-        
-        advertisingTrackingEnabled = ((BOOL(*)(id, SEL)) [sm methodForSelector:ateSelector])(sm, ateSelector);
-        
-        SEL aiSelector = NSSelectorFromString(@"advertisingIdentifier");
-        NSUUID *uuid = ((NSUUID *(*)(id, SEL)) [sm methodForSelector:aiSelector])(sm, aiSelector);
-        identifier = [uuid UUIDString];
-        
-        if (identifier && ![identifier isEqualToString:@"00000000-0000-0000-0000-000000000000"]) {
-            identifier = [[identifier stringByReplacingOccurrencesOfString:@"-" withString:@""] lowercaseString];
-        } else {
-            identifier = nil;
-        }
-    } @catch (NSException *e) {
-        CleverTapLogStaticInternal(@"Error checking availability of IDFA: %@", e.debugDescription);
-    }
-    
-    return identifier;
+    return nil;
 }
 
 + (NSString*)getPlatformName {
